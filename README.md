@@ -136,3 +136,9 @@ El proyecto tiene como objetivo crear una prueba de un sistema de conducción au
 ## Conclusión
 
 Este proyecto demuestra el uso efectivo de ROS y YOLOv8 en el desarrollo de un sistema de conducción autónoma. El enfoque modular garantiza que el sistema sea mantenible y escalable para futuras mejoras.
+
+--- 
+Proximas tareas a implementar 
+
+1. Codigo para hacer test para comprobar la conexion con los difrentes topics
+2. Realizacion de un codigo debuger 
