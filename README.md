@@ -73,9 +73,9 @@ El proyecto tiene como objetivo crear una prueba de un sistema de conducción au
    pip install opencv-python
    ```
 8. ** Instalación de ultralytics **
-``` bash
-pip install ultralytics
-```
+    ``` bash
+    pip install ultralytics
+    ```
 9. ** Instalacion del servidor para ver las imagenes
    ``` bash
    sudo apt-get install ros-melodic-web-video-server
