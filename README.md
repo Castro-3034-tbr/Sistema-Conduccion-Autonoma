@@ -1,18 +1,18 @@
-# Sistema-Conduccion-Autonoma
+# Trabajo de fin materia basado en una prueba de un sistema de conduccion 
 ---
 
 # Sistema de Conducción Autónoma
 
-Este repositorio contiene el código para un sistema de conducción autónoma desarrollado como parte del proyecto final de la materia de Visión Artificial Avanzada. El sistema está implementado utilizando ROS (Robot Operating System) y YOLOv8 para la detección y segmentación de objetos.
+Este repositorio contiene el código para un sistema de conducción autónoma desarrollado como parte del proyecto final de la materia de Visión Artificial Avanzada del grado de robotica de la USC. El sistema está implementado utilizando ROS (Robot Operating System) y con la ayuda del modelo YOLOv8 para la detección y segmentación de objetos.
 
 ## Descripción
 
-El proyecto tiene como objetivo crear un sistema de conducción autónoma implementado en un robot Waveshare JetRacer ROS AI. El sistema utiliza una cámara monocular y un sensor RPLIDAR para la percepción del entorno. El NVIDIA Jetson Nano se utiliza para ejecutar los modelos de IA y gestionar los datos de los sensores.
+El proyecto tiene como objetivo crear una prueba de un sistema de conducción autónoma implementado en un robot Waveshare JetRacer ROS AI. El sistema utiliza una cámara monocular y un sensor RPLIDAR para la percepción del entorno. El NVIDIA Jetson Nano se utiliza para ejecutar los modelos de IA y gestionar los datos de los sensores.
 
 ## Características
 
-- **Detección de Objetos**: Utiliza YOLOv8 para la detección de objetos en tiempo real.
-- **Segmentación de Carriles**: Implementa YOLOv8 para la segmentación de imágenes y la identificación de marcas viales.
+- **Detección de Objetos**: Utiliza YOLOv8 para la detección de objetos en tiempo real, para poder evitar los objetos que se encuentran delante del robot 
+- **Segmentación de Carriles**: Implementa YOLOv8 para la segmentación de imágenes para la identificación de marcas viales, en cocreto las lineas del carril.
 - **Integración con ROS**: Aprovecha ROS para la gestión de datos de sensores y el control de actuadores.
 - **Estructura de Código Modular**: Divide la funcionalidad en componentes modulares para facilitar el mantenimiento y la escalabilidad.
 
@@ -68,54 +68,68 @@ El proyecto tiene como objetivo crear un sistema de conducción autónoma implem
     cd ~/catkin_ws/
     catkin_make
     ```
-
+6. **Instalación de opencv**
+   ``` bash
+   pip install opencv-python
+   ```
+8. ** Instalación de ultralytics **
+``` bash
+pip install ultralytics
+```
+9. ** Instalacion del servidor para ver las imagenes
+   ``` bash
+   sudo apt-get install ros-melodic-web-video-server
+   ```
 ## Uso
 
 1. **Lanzar los nodos de ROS:**
 
-    Iniciar el nodo maestro de ROS:
+   Inicio de los sensores del robot 
 
     ```bash
-    roscore
+    #Incio del RPLIDAR
+    roslaunch jetracer lidar.launch
+
+    #Incio de la camara
+    roslaunch jetracer csi_camera.launch
     ```
 
-    En una nueva terminal, navega al espacio de trabajo de Catkin y lanza el paquete:
+    Inicio de los motores y del nodo para mover el robot
+   ```bash
+   roslaunch jetracer jetracer.launch
+   ```
+
+    Inicio del servidor para publicar las imagenes
+   ```bash
+   rosrun web_video_server web_video_server
+   ```
+   
+
+1. **Ejecutar los codigos necesarios**
 
     ```bash
-    cd ~/catkin_ws
-    source devel/setup.bash
-    roslaunch sistema_conduccion_autonoma main.launch
+    cd catkin_ws\src\sistema_conduccion_autonoma
+    python3 main.py
+    python3 AnalizarDatos.py 
+    python3 ConduccionAutonoma.py
     ```
 
-2. **Ejecutar los nodos de detección y segmentación:**
-
-    ```bash
-    rosrun sistema_conduccion_autonoma detection_node.py
-    rosrun sistema_conduccion_autonoma segmentation_node.py
-    ```
-
-3. **Visualizar los resultados:**
-
-    Usa RViz para visualizar los datos de los sensores y los resultados de la detección:
-
-    ```bash
-    rviz
-    ```
 
 ## Estructura del Código
 
 - `src/`: Contiene los scripts principales en Python para los nodos de ROS.
   - `main.py`: Inicializa los nodos de ROS y gestiona el flujo de datos entre los sensores y los actuadores.
-  - `detection_node.py`: Gestiona la detección de objetos utilizando YOLOv8.
-  - `segmentation_node.py`: Gestiona la segmentación de carriles utilizando YOLOv8.
-- `launch/`: Contiene archivos de lanzamiento de ROS.
-  - `main.launch`: Archivo de lanzamiento para iniciar todos los nodos necesarios.
+  - `AnalizarDatos.py`: Analizza todos los datos captados por los sensores.
+  - `segmentation_node.py`: Calcula las velocidades necesarias y las publicas en el topic necesario .
+- `srv/`: Contiene los mensajes necesario para los diferentes servicio.
+  - `MensajeAnalizarDatos.srv`: Mensaje de activacion para el servicio de analizar datos .
+  - `MensajeControlarRobot.srv`: Mensaje de activacion para el servicio de conduccion autonoma .
 - `config/`: Archivos de configuración para los parámetros de ROS.
-- `models/`: Modelos de YOLOv8 para detección y segmentación.
+- `models/`: Contine todo los necesario para entrenar y guardar los medelos que usamos
 
-## Resultados
-
-- **Detección de Objetos**: El modelo YOLOv8 detecta varios objetos con alta precisión.
+---
+#Resultados 
+- ** Entramiento del modelo de segmentacion** 
 - **Segmentación de Carriles**: El sistema segmenta con precisión las marcas viales, facilitando la navegación autónoma.
 - **Rendimiento del Sistema**: El robot demuestra capacidades robustas de conducción autónoma en varios escenarios de prueba.
 
