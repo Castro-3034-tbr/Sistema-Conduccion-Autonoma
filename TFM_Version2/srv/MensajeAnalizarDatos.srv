@@ -1,0 +1,16 @@
+#Peticion 
+sensor_msgs/LaserScan  DatosLaser
+sensor_msgs/Image  Imagen
+
+---
+#Respuesta 
+float32[] Distancia
+float32[] Angulo
+string[] Clase
+
+#Respuestas para la deteccion de carriles
+float32[] Puntos300
+float32[] Puntos400
+
+#Distancia minima detectada por el laser
+float32 dist_laser

@@ -1,0 +1,14 @@
+TODO: Ejecutar en el robot 
+sudo apt-get install ros-melodic-web-video-server
+rosrun web_video_server web_video_server
+
+
+TODO: En el navegador web del PC
+-Para ver la camara 
+http://<IP_ROBOT>/stream?topic=/csi_cam_0/image_raw
+
+-Para ver las detecciones 
+http://<IP_ROBOT>/stream?topic=/ImagenDetecciones
+
+-Para ver las mascaras
+http://<IP_ROBOT>/stream?topic=/ImagenMascaras

@@ -1,0 +1,12 @@
+names:
+- LineaCarril
+nc: 1
+roboflow:
+  license: CC BY 4.0
+  project: segmentarcarretera
+  url: https://universe.roboflow.com/castro3034tbr/segmentarcarretera/dataset/4
+  version: 4
+  workspace: castro3034tbr
+test: ./test/images
+train: ./train/images
+val: ./valid/images
